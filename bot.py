@@ -12,9 +12,12 @@ import logging
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.INFO
+    level=logging.ERROR
 )
+logging.getLogger("httpx").setLevel(logging.ERROR)
+logging.getLogger("telegram").setLevel(logging.ERROR)
 logger = logging.getLogger(__name__)
+
 load_dotenv()
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -249,7 +252,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 def main() -> None:
     application = Application.builder().token(BOT_TOKEN).build()
 
-    application.add_handler(ChatJoinRequestHandler(handle_join_request))  # ← перемістити сюди
+    application.add_handler(ChatJoinRequestHandler(handle_join_request))
     application.add_handler(ChatMemberHandler(handle_new_member, ChatMemberHandler.CHAT_MEMBER))
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help_command))
@@ -260,7 +263,7 @@ def main() -> None:
         "message",
         "callback_query",
         "chat_member",
-        "chat_join_request"  # ← додати це
+        "chat_join_request"
     ])
 
 
