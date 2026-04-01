@@ -8,15 +8,6 @@ Telegram Bot - Ex Limit Exchange
 
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton
 from telegram.ext import Application, CommandHandler, MessageHandler, CallbackQueryHandler, filters, ContextTypes
-import logging
-
-logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-    level=logging.ERROR
-)
-logging.getLogger("httpx").setLevel(logging.ERROR)
-logging.getLogger("telegram").setLevel(logging.ERROR)
-logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -53,8 +44,8 @@ async def handle_join_request(update: Update, context: ContextTypes.DEFAULT_TYPE
             ),
             reply_markup=get_main_keyboard()
         )
-    except Exception as e:
-        logger.error(f"Не вдалося надіслати повідомлення користувачу {user.id}: {e}")
+    except Exception:
+        pass
 
 def get_main_keyboard():
     keyboard = [
